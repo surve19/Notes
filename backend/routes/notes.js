@@ -16,7 +16,7 @@ router.get('/:folderId', async (req, res) => {
   }
 });
 
-router.post('/newnote', async(req, res) => {
+router.post('/:folderId/newnote', async(req, res) => {
     try {
         const Id = await folder.findById(req.body.folderId);
 
@@ -26,6 +26,7 @@ router.post('/newnote', async(req, res) => {
             folderId: Id
         });
         await note.save();
+        console.log(note)
         res.status(200).json(notes);
     } catch (error) {
         res.status(500).json(error);
