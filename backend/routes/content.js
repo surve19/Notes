@@ -3,7 +3,7 @@ const router = express.Router();
 const folder = require('../database/folders');
 const notes = require('../database/notes');
 
-router.get('/:id', async(req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const note = await notes.findById(req.params.id);
         res.status(200).json(note);
@@ -11,16 +11,18 @@ router.get('/:id', async(req, res) => {
         res.status(500).json(error);
         console.log(error)
     }
-}); 
+});
 
-router.patch('/', async(req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const Id = await notes.findById(req.params.id);
         if (Id) {
             const note = await notes.findByIdAndUpdate(
                 Id,
-                {title: req.body.title},
-                {content: req.body.content}
+                {
+                    title: req.body.title,
+                    content: req.body.content
+                }
             )
             console.log(req.body.content)
         } else {

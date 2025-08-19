@@ -1,60 +1,76 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import folderIcon from '../src/assets/folder.png';
 import { ChevronRight, Type, FileText } from 'lucide-react';
 import axios from 'axios';
 
+
 const EditNote = () => {
   const { noteId } = useParams();
-  console.log("noteId", noteId);
-  const [note, setNote] = useState({});
+  const navigate = useNavigate(); 
+  const [note, setNote] = useState({
+    title: "",
+    content: ""
+  });
 
-    const getResponse = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/note/${noteId}`);
-        console.log("Response from server", response);
-        setNote((prev)=>
-        {
-            return {    ...prev, ...response.data };
-        });
-      } catch (error) {
-        console.error("Error fetching note:", error);
-      }
-    };
+  const getResponse = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/note/${noteId}`);
+      console.log("Response from server", response);
+      setNote((prev) => {
+        return { ...prev, ...response.data };
+      });
+    } catch (error) {
+      console.error("Error fetching note:", error);
+    }
+  };
 
-    
+
 
   useEffect(() => {
     getResponse();
+    // console.log("note", note);
   }, []);
-  
-//   useEffect(() => {
-//     const response = await axios.get(`http://localhost:5000/note/${noteId}`);
-//     console.log("Response from server", response);
-//     // fetch(`http://localhost:5000/note/${noteId}`)
-//     //   .then(res =>
-//     //     {
-//     //          const RR = res.json();
-//     //          console.log("Response from server",RR);
-//     //     })
-//     //   .then(data => setNote(data))
-//     //   .catch(err => console.error(err));
-//   }, []);
+
+  //   useEffect(() => {
+  //     const response = await axios.get(`http://localhost:5000/note/${noteId}`);
+  //     console.log("Response from server", response);
+  //     // fetch(`http://localhost:5000/note/${noteId}`)
+  //     //   .then(res =>
+  //     //     {
+  //     //          const RR = res.json();
+  //     //          console.log("Response from server",RR);
+  //     //     })
+  //     //   .then(data => setNote(data))
+  //     //   .catch(err => console.error(err));
+  //   }, []);
 
 
-    console.log("note", note);
 
-  const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content || "");
 
-  console.log("title", title);
-  console.log("asdf",note.title);
+  // const [title, setTitle] = useState(note.title);
+  // const [content, setContent] = useState(note.content || "");
 
-  const handleChange = (field, value) => {
-    if (field === 'title') setTitle(value);
-    if (field === 'content') setContent(value);
+  const handleChange = (e) => {
+    console.log(e.target.name);
+    setNote((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value
+      }
+    });
+    // console.log("Updated note", note);
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response =await axios.patch(`http://localhost:5000/note/${noteId}`, {
+      title: note.title,
+      content: note.content
+    });
+    console.log("Response from server", response);
+    // navigate(`/notes/${noteId}`);
+  }
 
   if (!note) return <p className="p-4">Loading...</p>;
 
@@ -68,26 +84,33 @@ const EditNote = () => {
         <h2 className='font-mono text-3xl font-bold text-[#03045e] mt-4 mb-4'>{note.title}</h2>
       </div>
 
-      <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-3xl m-auto'>
-        <div className="max-w-2xl mx-auto space-y-6">
-          <div>
-            <label className="flex items-center gap-2 text-lg font-medium text-gray-700">
-              <Type size={24} />
-              {note.title}
-            </label>
-            <input className="mt-2 text-lg font-semibold" value={note.title} onChange={handleChange} />
-          </div>
-          <div>
-            <label className="flex items-center gap-2 text-lg font-medium text-gray-700">
-              <FileText size={22} />
-              {note.content}
-            </label>
-            <div className="mt-2 whitespace-pre-wrap text-gray-800 leading-relaxed">
-              {note.content}
+      <form action="" onSubmit={handleSubmit}>
+        <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-3xl m-auto'>
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div>
+              <label className="flex items-center gap-2 text-lg font-medium text-gray-700">
+                <Type size={24} />
+                Title
+              </label>
+              <input className="mt-2 p-3 text-lg font-semibold border border-black-100 rounded-md w-100" name='title' value={note.title} onChange={handleChange} />
             </div>
+            <div>
+              <label className="flex items-center gap-2 text-lg font-medium text-gray-700">
+                <FileText size={22} />
+                Content
+              </label>
+              <textarea className="p-3 border border-black-100 rounded-md mt-2 whitespace-pre-wrap text-gray-800 leading-relaxed h-50 w-100" name='content' onChange={handleChange} value={note.content}></textarea>
+            </div>
+            <button
+                        type="submit"
+                        className="bg-[#03045e] text-lg text-white font-bold font-mono px-4 py-2 rounded hover:bg-blue-600"
+                    >
+                        Save Note
+            </button>
           </div>
         </div>
-      </div>
+      </form>
+
     </div>
   );
 };
