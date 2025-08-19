@@ -11,6 +11,19 @@ router.get('/', async(req, res) => {
     }
 });
 
+router.get('/:folderId', async (req, res) => {
+  try {
+    const folderDetails = await folder.find({
+      _id: req.params.folderId,
+      isDeleted: false
+    });
+    res.status(200).json(folderDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+});
+
 router.post('/', async(req, res) => {
     try {
         const folders = new folder({

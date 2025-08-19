@@ -8,12 +8,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Notes = () => {
   const { folderId } = useParams();
   const [notes, setNotes] = useState([]);
+  const [folders, setFolders] = useState([]);
   
     useEffect(() => {
       fetch(`http://localhost:5000/notes/${folderId}`)
         .then(res => res.json())
         .then(data => setNotes(data))
         .catch(err => console.log(err));
+
+      fetch(`http://localhost:5000/${folderId}`)
+      .then(res => res.json())
+      .then(data => setFolders(data))
+      .catch(err => console.error(err));
+
     }, [folderId]);
   const navigate = useNavigate();
 
@@ -21,9 +28,13 @@ const Notes = () => {
     <div className='p-4 '>
       <div className='flex justify-between p-4 items-center'>
         <div className='flex p-4'>
-          <img src={folderIcon} alt="Folder Icon" className='w-18 h-12'/>
+          <img src={folderIcon} alt="Folder Icon" className='w-18 h-12 cursor-pointer' onClick={() => {navigate('/')}}/>
           <ChevronRight size={48}/>
-          <h1 className='font-mono text-3xl font-bold text-[#03045e] mt-2 mb-4'>Daily</h1>
+          
+          {folders.map(folder => (
+            <h1 className='font-mono text-3xl font-bold text-[#03045e] mt-2 mb-4'>{folder.title}</h1>
+          ))}
+          
         </div>
         <button className='flex w-38 h-14 rounded-xl gap-3 border-2 border-[#03045e] justify-center items-center' onClick={() => {navigate(`newnote`)}}>
           <img src={newIcon} alt="New Note Icon" className='w-10 h-10'/>
