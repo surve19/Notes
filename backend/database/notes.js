@@ -11,7 +11,8 @@ const notesSchema = new mongoose.Schema(
             default: ''
         },
         folderId: {
-            type: mongoose.Schema.Types.ObjectId, ref: "foldermodels"
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "foldermodels"
         },
         isDeleted: {
             type: Boolean,

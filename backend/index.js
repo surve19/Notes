@@ -9,7 +9,10 @@ const contentRouter = require('./routes/content');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
 const PORT = 5000; 
 const MONGODB_URI = "mongodb+srv://om21beceg088:om1234@cluster0.q7sfd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 

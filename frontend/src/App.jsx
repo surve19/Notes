@@ -4,6 +4,7 @@ import Notes from '../components/Notes';
 import Navbar from '../components/Navbar';
 import AddNote from '../components/AddNotes';
 import NoteDetails from '../components/NoteDetails';
+import EditNote from '../components/EditNote';
 
 function App() {
 
@@ -14,7 +15,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/notes/:folderId" element={<Notes />} />
         <Route path="/note/:noteId" element={<NoteDetails />} />
-        <Route path='/notes/newnote' element={<AddNote />}/>
+        <Route path='/notes/:folderId/newnote' element={<AddNote />}/>
+        <Route path='/notes/:noteId/edit' element={<EditNote />}/>
       </Routes>
     </>
   )

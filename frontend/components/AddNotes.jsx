@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import folderIcon from '../src/assets/folder.png';
 import { ChevronRight, Type, FileText } from 'lucide-react';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 const AddNotes = () => {
+
+const { folderId } = useParams();
+
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
@@ -11,21 +17,34 @@ const AddNotes = () => {
         if (field === 'content') setContent(value);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
+        // newNote();
         e.preventDefault();
         if (!title.trim() || !content.trim()) {
             alert("Please fill out both fields.");
             return;
         }
         console.log("Note saved:", { title, content });
+        console.log("folderiD",folderId)
+        console.log(`http://localhost:5000/notes/${folderId}/newnote`)
+        const response = await axios.post(`http://localhost:5000/notes/${folderId}/newnote`,{
+            title,
+            content,
+            folderId
+        }).then( response =>
+        {
+            console.log("Data Saved",response);
+        })
 
         setTitle("");
         setContent("");
+        navigate(`/notes/${folderId}`);
     };
 
+    const navigate = useNavigate();
+
     return (
-        <div className='p-4'>
-            
+        <div className='p-4'> 
             <div className='flex p-4 items-center'>
                 <img src={folderIcon} alt="Folder Icon" className='w-18 h-12' />
                 <ChevronRight size={48} />

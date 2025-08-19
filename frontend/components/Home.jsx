@@ -23,6 +23,7 @@ const Home = () => {
             {folders.map((folder) => (
               <Folder key={folder._id} folderName={folder.title} folderId={folder._id}/>
             ))}
+          {/* New Folder */}
           <div className='relative w-52 h-46 p-8 shadow-2xl rounded-xl items-center bg-white-0'>
             <img src={folderIcon} alt="Folder Icon" className='w-36 h-28 shadow-sm blur-sm'/>
             <img src={newFolderIcon} alt="New Folder Icon" className='absolute w-22 h-16 bottom-[35%] right-[30%] px-1'/>
