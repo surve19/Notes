@@ -7,7 +7,6 @@ router.get('/:id', async(req, res) => {
     try {
         const note = await notes.findById(req.params.id);
         res.status(200).json(note);
-        console.log(req.params.id)
     } catch (error) {
         res.status(500).json(error);
         console.log(error)

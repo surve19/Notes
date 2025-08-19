@@ -26,6 +26,7 @@ router.post('/:folderId/newnote', async(req, res) => {
             folderId: Id
         });
         await note.save();
+        console.log(note)
         res.status(200).json(notes);
         console.log("folderId",req.body.folderId)
     } catch (error) {
