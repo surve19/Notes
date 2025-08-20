@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <div className='p-4 m-4'>
       <h1 className='font-mono text-3xl font-bold text-[#03045e] mt-2 mb-4 ml-4'>My Space</h1>
-      <div className='flex gap-8'>
+      <div className='flex flex-wrap gap-8'>
             {folders.map((folder) => (
               <Folder key={folder._id} folderName={folder.title} folderId={folder._id}/>
             ))}

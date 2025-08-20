@@ -69,7 +69,7 @@ const EditNote = () => {
       content: note.content
     });
     console.log("Response from server", response);
-    // navigate(`/notes/${noteId}`);
+    navigate(`/notes/${note.folderId}`);
   }
 
   if (!note) return <p className="p-4">Loading...</p>;
@@ -79,9 +79,9 @@ const EditNote = () => {
       <div className='flex p-4 items-center'>
         <img src={folderIcon} alt="Folder Icon" className='w-18 h-12' />
         <ChevronRight size={48} />
-        <h2 className='font-mono text-3xl font-bold text-[#03045e] mt-4 mb-4'>Folder</h2>
+        <h2 className='font-mono text-2xl sm:text-3xl font-bold text-[#03045e] mt-4 mb-4'>Folder</h2>
         <ChevronRight size={48} />
-        <h2 className='font-mono text-3xl font-bold text-[#03045e] mt-4 mb-4'>{note.title}</h2>
+        <h2 className='font-mono text-2xl sm:text-3xl font-bold text-[#03045e] mt-4 mb-4'>{note.title}</h2>
       </div>
 
       <form action="" onSubmit={handleSubmit}>

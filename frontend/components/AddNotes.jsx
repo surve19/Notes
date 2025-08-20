@@ -48,9 +48,9 @@ const { folderId } = useParams();
             <div className='flex p-4 items-center'>
                 <img src={folderIcon} alt="Folder Icon" className='w-18 h-12' />
                 <ChevronRight size={48} />
-                <h2 className='font-mono text-3xl font-bold text-[#03045e] mt-4 mb-4'>Daily</h2>
+                <h2 className='font-mono text-2xl sm:text-3xl font-bold text-[#03045e] mt-4 mb-4'>Daily</h2>
                 <ChevronRight size={48} />
-                <h2 className='font-mono text-3xl font-bold text-[#03045e] mt-4 mb-4'>New Note</h2>
+                <h2 className='font-mono text-2xl sm:text-3xl font-bold text-[#03045e] mt-4 mb-4'>New Note</h2>
             </div>
 
             <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-3xl m-auto items-center'>
