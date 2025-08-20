@@ -1,11 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require('dotenv').config();
 const cors = require("cors");
 const folderModel = require('./database/folders'); 
 const notesModel = require('./database/notes');
 const folderRouter = require('./routes/folder');
 const notesRouter = require('./routes/notes');
 const contentRouter = require('./routes/content');
+const authRouter = require('./routes/auth');
 
 const app = express();
 app.use(express.json());
@@ -13,12 +15,10 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:5173'
 }));
-const PORT = 5000; 
-const MONGODB_URI = "mongodb+srv://om21beceg088:om1234@cluster0.q7sfd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI)
 .then(async () => {
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT, () => {
     console.log("App running");
     });
 })
@@ -30,6 +30,7 @@ mongoose.connect(MONGODB_URI)
 //     res.send("Running");
 // });
 
+app.use('/auth/', authRouter);
 app.use('/', folderRouter);
 app.use('/notes', notesRouter);
-app.use('/note/', contentRouter);
+app.use('/note/', contentRouter); 
