@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGODB_URI)
 //     res.send("Running");
 // });
 
-app.use('/auth/', authRouter);
+app.use('/auth', authRouter);
 app.use('/', folderRouter);
 app.use('/notes', notesRouter);
 app.use('/note/', contentRouter); 
