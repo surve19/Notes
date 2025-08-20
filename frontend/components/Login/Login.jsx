@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Mail, Lock } from "lucide-react";
+
+import axios from "axios";
  
 const Login = () => {
 
@@ -36,13 +38,25 @@ const Login = () => {
  
     try {
 
-      // TODO: Connect to your backend login API
+      const response = await axios.post('http://localhost:5000/auth/login', formData
+        ,{
+        withCredentials: true
+      }
+    );
+      console.log(response)
+      if (response.status === 200) {
+        alert("Login successful!");
+        navigate("/");
+      }
+      if(!response){
+        alert("Invalid credentials ok");
+      }
 
       console.log("Login form submitted:", formData);
  
       // Redirect after successful login
 
-      navigate("/");
+      
 
     } catch (err) {
 
