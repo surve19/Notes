@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const folder = require('../database/folders');
+// const {authenticateToken} = require('../middleware');
 
-router.get('/', async(req, res) => {
+router.get('/',  async(req, res) => {
     try {
         const folders = await folder.find({isDeleted: false});
         res.status(200).json(folders);
