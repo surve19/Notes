@@ -42,7 +42,11 @@ const Signup = () => {
 
       // TODO: Connect to your backend signup API here
 
-      const response = await axios.post('http://localhost:5000/auth/signup', formData);
+      const response = await axios.post('http://localhost:5000/auth/signup', formData
+        ,{
+        withCredentials: true
+      }
+    );
       if (response.status === 201) {
         alert("Signup successful!");
       }
