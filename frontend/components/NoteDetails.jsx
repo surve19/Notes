@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import folderIcon from '../src/assets/folder.png';
 import { ChevronRight, Type, FileText } from 'lucide-react';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const NoteDetails = () => {
   const { noteId } = useParams();
@@ -20,7 +22,6 @@ const NoteDetails = () => {
       .then(folderData => {setFolder(...folderData)})
       .catch(err => console.error(err));
   }, [noteId]);
-  // console.log(folder.title)
   if (!note) return <p className="p-4">Loading...</p>;
 
   return (
@@ -36,7 +37,7 @@ const NoteDetails = () => {
       <div className='bg-white rounded-xl shadow-sm border border-gray-200 p-8 max-w-3xl m-auto'>
         <div className="max-w-2xl mx-auto space-y-6">
           <div>
-            <label className="flex items-center gap-2 text-2xl font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-lg font-semibold text-gray-700">
               <Type size={24} />
               Title
             </label>
@@ -44,12 +45,12 @@ const NoteDetails = () => {
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-2xl font-medium text-gray-700">
+            <label className="flex items-center gap-2 text-lg font-semibold text-gray-700">
               <FileText size={22} />
               Content
             </label>
             <div className="mt-2 whitespace-pre-wrap text-gray-800 leading-relaxed">
-              {note.content}
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{note.content}</ReactMarkdown>
             </div>
           </div>
         </div>
