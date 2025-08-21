@@ -46,7 +46,7 @@ const Login = () => {
       console.log(response)
       if (response.status === 200) {
         alert("Login successful!");
-        navigate("/");
+        window.location.href = "/"; // because navigate does not reload the navbar component  
       }
       if(!response){
         alert("Invalid credentials ok");
@@ -146,7 +146,7 @@ const Login = () => {
 
             className="text-[#03045e] font-semibold cursor-pointer"
 
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/auth/signup")}
 >
 
             Sign up

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const folder = require('../database/folders');
 const notes = require('../database/notes');
+const { authenticateToken } = require("../middleware");
 
 router.get('/:id', async (req, res) => {
     try {

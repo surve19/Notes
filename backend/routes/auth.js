@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../database/user');
 const bcrypt = require("bcrypt");
+const { authenticateToken } = require("../middleware");
 require('dotenv').config();
 
 
@@ -54,10 +55,13 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: userExist._id }, process.env.JWT_SECRETKEY, { expiresIn: "1h" });
+    const token = jwt.sign({ id: userExist._id ,name:userExist.name}, process.env.JWT_SECRETKEY, { expiresIn: "1h" });
 
     res.cookie("uid",token, {
-      httpOnly: true
+      httpOnly: true,
+      secure:false,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: 'lax',
     });
 
     return res.json({ id: userExist._id, email: userExist.email });
@@ -68,4 +72,16 @@ router.post("/login", async (req, res) => {
   }
 })
 
+router.post("/logout", (req, res) => {
+  console.log("logout");
+  res.clearCookie("uid", {
+    httpOnly: true,
+  });
+  res.status(200).json({ message: "Logged out" });
+});
+
+router.get("/me",authenticateToken, (req, res) => {
+  console.log("in me",req.user)
+  return res.json({ user: req.user });
+}); 
 module.exports = router;

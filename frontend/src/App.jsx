@@ -19,8 +19,10 @@ function App() {
         <Route path="/note/:noteId" element={<NoteDetails />} />
         <Route path='/notes/:folderId/newnote' element={<AddNote />}/>
         <Route path='/notes/:noteId/edit' element={<EditNote />}/>
-        <Route path='/signup' element={<Signup />}/>
-        <Route path='/login' element={<Login />}/>
+        <Route path='/auth/signup' element={<Signup />}/>
+        <Route path='/auth/login' element={<Login />}/>
+        <Route path='/logout' element={<Login />}/>
+
       </Routes>
     </>
   )

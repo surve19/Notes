@@ -168,7 +168,7 @@ const Signup = () => {
 
             className="text-[#03045e] font-semibold cursor-pointer"
 
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
           >
 
             Log in

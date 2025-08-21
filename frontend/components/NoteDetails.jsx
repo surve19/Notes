@@ -20,7 +20,9 @@ const NoteDetails = () => {
       })
       .then(res => res.json())
       .then(folderData => {setFolder(...folderData)})
-      .catch(err => console.error(err));
+      .catch(err =>{
+         console.error(err)
+  });
   }, [noteId]);
   if (!note) return <p className="p-4">Loading...</p>;
 

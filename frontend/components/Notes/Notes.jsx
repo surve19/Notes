@@ -33,7 +33,7 @@ const Notes = () => {
           <ChevronRight size={48}/>
           
           {folders.map(folder => (
-            <h1 className='font-mono text-2xl sm:text-3xl font-bold text-[#03045e] mt-2 mb-4'>{folder.title}</h1>
+            <h1 className='font-mono   font-bold text-[#03045e] mt-2 mb-4'>{folder.title}</h1>
           ))}
           
         </div>

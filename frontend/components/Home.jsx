@@ -5,12 +5,14 @@ import axios from 'axios';
 import folderIcon from '../src/assets/folder.png';
 import newFolderIcon from '../src/assets/new-folder.png';
 import { FolderDownIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
   const [folders, setFolders] = useState([]);
   const [title, setTitle] = useState("");
   const [isPopUpOpen, setPopUpOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
         setTitle(e.target.value);
@@ -22,7 +24,9 @@ const Home = () => {
         // const title = title;
         console.log(title);
         
-        await axios.post("http://localhost:5000",{ title })
+        await axios.post("http://localhost:5000/",{ title },{
+          withCredentials: true
+        })
         .then((res) => {
           console.log(res)
           setTitle(title);
@@ -36,11 +40,20 @@ const Home = () => {
     };
 
   useEffect(() => {
-    fetch("http://localhost:5000")
-    .then((res) => res.json())
-    .then((data) => setFolders(data))
-    .catch((err) => {
-      console.log(err)
+    // fetch("http://localhost:5000/",{ method: 'GET',credentials: 'include'})
+    // .then((res) => res.json())
+    // .then((data) => setFolders(data))
+    // .catch((err) => {
+    //   console.log(err)
+    // });
+    const response = axios.get("http://localhost:5000/", {
+      withCredentials: true
+    });
+    response.then((res) => {
+      setFolders(res.data);
+    }).catch((err) => {
+      navigate('/auth/login');
+      console.log(err);
     });
   },[]);
 
