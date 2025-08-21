@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const folder = require('../database/folders');
+<<<<<<< HEAD
 const { authenticateToken } = require('../middleware.js');
 
 
 router.get('/',authenticateToken, async(req, res) => {
+=======
+// const {authenticateToken} = require('../middleware');
+
+router.get('/',  async(req, res) => {
+>>>>>>> f4c120b85937ed70445357fd64a1aa9e90323e22
     try {
         // console.log("req.cookie",req.cookies);   
         const folders = await folder.find({isDeleted: false});
